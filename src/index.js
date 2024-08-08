@@ -8,6 +8,7 @@ import { AboutUs } from './pages/AboutUs';
 import Home from './pages/Home';
 import Contact from './pages/Contact';
 import { Signup } from './pages/Signup';
+import Login from './pages/Login';
 import { NoPage } from './pages/NoPage';
 
 
@@ -21,7 +22,7 @@ root.render(
           <Route path="Signup" element={<Signup />} />
           <Route path="contact" element={<Contact />} />
           <Route path="AboutUs" element={<AboutUs />} />
-          <Route path="*" element={<NoPage />} />
+          <Route path="login" element={<Login />} />
         </Route>
       </Routes>
     </BrowserRouter>
