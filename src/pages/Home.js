@@ -22,7 +22,12 @@ const Home = () => {
   }, []);
 
   const handleStartRecording = async () => {
-    const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+     const stream = await navigator.mediaDevices.getUserMedia({
+      video: {
+        facingMode: { exact: 'environment' }, // Use the back camera
+        audio: false,
+      },
+    });
     videoRef.current.srcObject = stream;
 
     const recorder = new MediaRecorder(stream, {
