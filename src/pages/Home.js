@@ -107,7 +107,7 @@ const Home = () => {
 
   return (
     <div className=' font-serif'>
-      <div className="  flex font top-0 font-semibold flex-col items-center justify-center   ">
+      <div className=" hidden flex font top-0 font-semibold flex-col items-center justify-center   ">
         <div className={`${pothole === true ? '' : ' hidden'}  text-white bg-red-600 rounded-xl text-lg flex flex-col mx-auto px-14 py-3`}>
           <div className='mx-auto fill-black'>⚠ Alert! ⚠</div>
           <div> Pothole Detected in 100m</div>
@@ -134,7 +134,7 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <div className='hidden flex gap-y-10 flex-col'>
+      <div className=' flex gap-y-10 flex-col'>
         <div className=' mx-auto flex flex-col gap-y-4 '>
           <div className=' text-4xl font-semibold ' >Pothole Detection System </div>
           <div className=' text-gray-400'>Efficiently Identify Road Hazards. Enhancing Road Safety with AI</div>
