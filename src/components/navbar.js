@@ -9,7 +9,7 @@ export const Navbar = () => {
                     Pothole Detection
                 </div>
                 <div className="w-[40%] justify-between p-8 flex h-full">
-                    <div className="h-fit cursor-pointer hover:border-b-2 border-black">
+                    <div className="h-fit cursor-pointer border-black">
                         <NavLink
                             to="/"
                             className={({ isActive }) =>
@@ -19,7 +19,7 @@ export const Navbar = () => {
                             Home
                         </NavLink>
                     </div>
-                    <div className="h-fit cursor-pointer hover:border-b-2 border-black">
+                    <div className="h-fit cursor-pointer border-black">
                         <NavLink
                             to="/AboutUs"
                             className={({ isActive }) =>
@@ -29,7 +29,7 @@ export const Navbar = () => {
                             About Us
                         </NavLink>
                     </div>
-                    <div className="h-fit cursor-pointer hover:border-b-2 border-black">
+                    <div className="h-fit cursor-pointer  border-black">
                         <NavLink
                             to="/Contact"
                             className={({ isActive }) =>

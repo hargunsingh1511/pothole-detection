@@ -4,7 +4,7 @@ import HomeImg from '../assests/_c2eaa92b-3b99-4b27-b486-bde9c7c0616f.jpeg'
 const Home = () => {
   const [locations, setLocations] = useState([]);
   const [mediaRecorder, setMediaRecorder] = useState(null);
-  const [pothole, setpothole] = useState(true);
+  const [pothole, setpothole] = useState(false);
   const [recordedChunks, setRecordedChunks] = useState([]);
   const videoRef = useRef(null);
   const sendIntervalRef = useRef(null);
@@ -22,6 +22,12 @@ const Home = () => {
   }, []);
 
   const handleStartRecording = async () => {
+    // const stream = await navigator.mediaDevices.getUserMedia({
+    //   video: {
+    //     facingMode: { exact: 'environment' }, // Use the back camera
+    //     audio: false,
+    //   },
+    // });
     const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
     videoRef.current.srcObject = stream;
 
@@ -47,7 +53,7 @@ const Home = () => {
       else {
         console.log("error in sending data", recordedChunks.length);
       }
-    }, 5000); // Send data every 5 seconds
+    }, 1000); // Send data every 5 seconds
   };
 
   const handleStopRecording = () => {
@@ -71,7 +77,7 @@ const Home = () => {
 
     formData.append('latitude', medianLat);
     formData.append('longitude', medianLong);
-    console.log(blob);
+    console.log(formData);
 
     // try {
     //   const response = await fetch('YOUR_BACKEND_ENDPOINT', {
@@ -102,7 +108,7 @@ const Home = () => {
 
   return (
     <div className=' font-serif'>
-      <div className=" hidden flex font top-0 font-semibold flex-col items-center justify-center   ">
+      <div className="hidden  flex font top-0 font-semibold flex-col items-center justify-center   ">
         <div className={`${pothole === true ? '' : ' hidden'}  text-white bg-red-600 rounded-xl text-lg flex flex-col mx-auto px-14 py-3`}>
           <div className='mx-auto fill-black'>⚠ Alert! ⚠</div>
           <div> Pothole Detected in 100m</div>
