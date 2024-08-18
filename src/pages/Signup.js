@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import SignUpImg from '../assests/SignUp.png';
+import CustomAlert from '../components/CustomAlert'; 
 
 export const Signup = () => {
   const [formData, setFormData] = useState({
@@ -17,8 +18,13 @@ export const Signup = () => {
     confirmPassword: '',
   });
 
+  const [passwordStrength, setPasswordStrength] = useState('');
+  const [alert, setAlert] = useState({ visible: false, message: '', type: '' });
+
+  const navigate = useNavigate(); 
+
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const usernameRegex = /^[A-Za-z][A-Za-z0-9_]{2,}$/; 
+  const usernameRegex = /^[A-Za-z][A-Za-z0-9_]{2,}$/;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -52,8 +58,10 @@ export const Signup = () => {
           ...prevErrors,
           password: 'Password must be at least 8 characters long.',
         }));
+        setPasswordStrength('');
       } else {
         setErrors((prevErrors) => ({ ...prevErrors, password: '' }));
+        evaluatePasswordStrength(value);
       }
     }
 
@@ -69,13 +77,62 @@ export const Signup = () => {
     }
   };
 
+  const evaluatePasswordStrength = (password) => {
+    let strength = '';
+    const strengthCriteria = {
+      length: password.length >= 8,
+      uppercase: /[A-Z]/.test(password),
+      lowercase: /[a-z]/.test(password),
+      number: /\d/.test(password),
+      specialChar: /[!@#$%^&*(),.?":{}|<>]/.test(password),
+    };
+
+    const fulfilledCriteria = Object.values(strengthCriteria).filter(Boolean).length;
+
+    if (fulfilledCriteria <= 2) {
+      strength = 'Weak';
+    } else if (fulfilledCriteria === 3 || fulfilledCriteria === 4) {
+      strength = 'Moderate';
+    } else if (fulfilledCriteria === 5) {
+      strength = 'Strong';
+    }
+
+    setPasswordStrength(strength);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!errors.username && !errors.email && !errors.password && !errors.confirmPassword) {
-      alert('Sign Up Successful!');
+
+    const isFormValid =
+      formData.username &&
+      formData.email &&
+      formData.password &&
+      formData.confirmPassword &&
+      !errors.username &&
+      !errors.email &&
+      !errors.password &&
+      !errors.confirmPassword;
+
+    if (isFormValid) {
+      setAlert({ visible: true, message: 'Sign Up Successful!', type: 'success' });
+
+      setFormData({
+        username: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+      });
+
+      setTimeout(() => {
+        navigate('/login');
+      }, 2000); 
     } else {
-      alert('Please correct the errors in the form.');
+      setAlert({ visible: true, message: 'Please fill out all fields correctly.', type: 'error' });
     }
+  };
+
+  const handleCloseAlert = () => {
+    setAlert({ visible: false, message: '', type: '' });
   };
 
   return (
@@ -85,6 +142,9 @@ export const Signup = () => {
           <h1 className="text-4xl font-bold mb-2">Sign Up</h1>
           <p className="text-gray-600 mb-6">Create an account to get started</p>
           <form onSubmit={handleSubmit}>
+            {alert.visible && (
+              <CustomAlert message={alert.message} type={alert.type} onClose={handleCloseAlert} />
+            )}
             <div className="mb-4">
               <label htmlFor="username" className="block text-gray-700">Username</label>
               <input
@@ -123,6 +183,11 @@ export const Signup = () => {
                 className="w-full mt-2 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
+              {passwordStrength && (
+                <p className={`text-sm ${passwordStrength === 'Weak' ? 'text-red-500' : passwordStrength === 'Moderate' ? 'text-yellow-500' : 'text-green-500'}`}>
+                  Password Strength: {passwordStrength}
+                </p>
+              )}
             </div>
             <div className="mb-4">
               <label htmlFor="confirm-password" className="block text-gray-700">Confirm Password</label>
@@ -152,7 +217,7 @@ export const Signup = () => {
           </p>
         </div>
         <div className="max-w-full md:max-w-[500px]">
-          <img alt="landing page" src={SignUpImg} />
+          <img alt="sign up page" src={SignUpImg} />
         </div>
       </div>
     </div>

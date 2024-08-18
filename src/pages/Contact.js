@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import ContactUsImg from '../assests/ContactUs.png';
+import CustomAlert from '../components/CustomAlert'; 
 
 const ContactUs = () => {
   const [formData, setFormData] = useState({
@@ -9,9 +10,8 @@ const ContactUs = () => {
     message: '',
   });
 
-  const [errors, setErrors] = useState({
-    email: '',
-  });
+  const [errors, setErrors] = useState({});
+  const [alert, setAlert] = useState(null); 
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -28,20 +28,39 @@ const ContactUs = () => {
       } else {
         setErrors((prevErrors) => ({ ...prevErrors, email: '' }));
       }
+    } else {
+      setErrors((prevErrors) => ({ ...prevErrors, [name]: value ? '' : 'This field is required.' }));
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!errors.email) {
-      alert('Message sent successfully!');
+
+    const newErrors = {};
+    Object.keys(formData).forEach((key) => {
+      if (!formData[key]) {
+        newErrors[key] = 'This field is required.';
+      }
+    });
+
+    if (Object.keys(newErrors).length === 0 && !errors.email) {
+      setAlert({ message: 'Message sent successfully!', type: 'success' });
+
+      setFormData({
+        firstName: '',
+        lastName: '',
+        email: '',
+        message: '',
+      });
     } else {
-      alert('Please correct the errors in the form.');
+      setErrors((prevErrors) => ({ ...prevErrors, ...newErrors }));
+      setAlert({ message: 'Please fill out all fields correctly.', type: 'error' });
     }
   };
 
   return (
     <div className="container mx-auto p-6">
+      {alert && <CustomAlert message={alert.message} type={alert.type} onClose={() => setAlert(null)} />}
       <div className="flex flex-col md:flex-row justify-between items-center md:items-start">
         <div className="flex flex-col gap-y-4 md:w-1/2">
           <h1 className="text-4xl font-bold mb-2">Contact us</h1>
@@ -59,6 +78,7 @@ const ContactUs = () => {
                   placeholder="Jane"
                   className="w-full mt-2 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
+                {errors.firstName && <p className="text-red-500 text-sm">{errors.firstName}</p>}
               </div>
               <div className="flex-1">
                 <label htmlFor="last-name" className="block text-gray-700">Last name</label>
@@ -71,6 +91,7 @@ const ContactUs = () => {
                   placeholder="Smitherton"
                   className="w-full mt-2 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
+                {errors.lastName && <p className="text-red-500 text-sm">{errors.lastName}</p>}
               </div>
             </div>
             <div className="mb-4">
@@ -96,6 +117,7 @@ const ContactUs = () => {
                 placeholder="Enter your question or message"
                 className="w-full mt-2 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 h-32"
               />
+              {errors.message && <p className="text-red-500 text-sm">{errors.message}</p>}
             </div>
             <button
               type="submit"
@@ -106,7 +128,7 @@ const ContactUs = () => {
           </form>
         </div>
         <div className="mt-6 md:mt-0 md:w-1/2 max-w-[700px]">
-          <img style={{marginTop: 100}} alt="contact" src={ContactUsImg} />
+          <img style={{ marginTop: 100 }} alt="contact" src={ContactUsImg} />
         </div>
       </div>
     </div>

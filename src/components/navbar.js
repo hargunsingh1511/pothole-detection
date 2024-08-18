@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
-import { HiOutlineMenu, HiOutlineX } from 'react-icons/hi'; // Import icons for menu
+import { HiOutlineMenu, HiOutlineX } from 'react-icons/hi'; 
 
 export const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -24,12 +24,12 @@ export const Navbar = () => {
                         className={({ isActive }) =>
                             isActive ? 'active border-b-2 border-black' : 'hover:border-b-2 border-black'
                         }
-                        onClick={toggleMenu} // Close menu on link click
+                        onClick={toggleMenu} 
                     >
                         Home
                     </NavLink>
                     <NavLink
-                        to="/AboutUs"
+                        to="/about"
                         className={({ isActive }) =>
                             isActive ? 'active border-b-2 border-black' : 'hover:border-b-2 border-black'
                         }
@@ -38,7 +38,7 @@ export const Navbar = () => {
                         About Us
                     </NavLink>
                     <NavLink
-                        to="/Contact"
+                        to="/contact"
                         className={({ isActive }) =>
                             isActive ? 'active border-b-2 border-black' : 'hover:border-b-2 border-black'
                         }
@@ -47,7 +47,7 @@ export const Navbar = () => {
                         Contact Us
                     </NavLink>
                     <NavLink
-                        to="/Signup"
+                        to="/signup"
                         className={({ isActive }) =>
                             isActive ? 'active' : ''
                         }

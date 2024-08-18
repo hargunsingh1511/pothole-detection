@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import LoginImg from '../assests/SignUp.png';
+import { Link, useNavigate } from 'react-router-dom';
+import LoginImg from '../assests/SignUp.png'; 
+import CustomAlert from '../components/CustomAlert'; 
+
 const Login = () => {
   const [formData, setFormData] = useState({
     email: '',
@@ -11,6 +13,10 @@ const Login = () => {
     email: '',
     password: '',
   });
+
+  const [alert, setAlert] = useState({ visible: false, message: '', type: '' });
+  
+  const navigate = useNavigate();
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -43,11 +49,24 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!errors.email && !errors.password) {
-      alert('Login Successful!');
+    if (!errors.email && !errors.password && formData.email && formData.password) {
+      setAlert({ visible: true, message: 'Login Successful!', type: 'success' });
+
+      setFormData({
+        email: '',
+        password: '',
+      });
+
+      setTimeout(() => {
+        navigate('/');
+      }, 2000); 
     } else {
-      alert('Please correct the errors in the form.');
+      setAlert({ visible: true, message: 'Please fill out all fields correctly.', type: 'error' });
     }
+  };
+
+  const handleCloseAlert = () => {
+    setAlert({ visible: false, message: '', type: '' });
   };
 
   return (
@@ -57,6 +76,9 @@ const Login = () => {
           <h1 className="text-4xl font-bold mb-2">Login</h1>
           <p className="text-gray-600 mb-6">Sign in to your account</p>
           <form onSubmit={handleSubmit}>
+            {alert.visible && (
+              <CustomAlert message={alert.message} type={alert.type} onClose={handleCloseAlert} />
+            )}
             <div className="mb-4">
               <label htmlFor="email" className="block text-gray-700">Email address</label>
               <input
@@ -96,7 +118,7 @@ const Login = () => {
           </p>
         </div>
         <div className="max-w-full md:max-w-[500px]">
-          <img alt="landing page" src={LoginImg} />
+          <img alt="login page" src={LoginImg} />
         </div>
       </div>
     </div>
