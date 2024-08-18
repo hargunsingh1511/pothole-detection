@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import HomeImg from '../assests/_c2eaa92b-3b99-4b27-b486-bde9c7c0616f.jpeg';
+import HomeImg from '../assests/pothole.jpg';
 
 const Home = () => {
   const [locations, setLocations] = useState([]);
@@ -113,20 +113,23 @@ const Home = () => {
       </div>
       <div className=" flex flex-col gap-y-10">
         <div className="mx-auto flex flex-col items-center text-center gap-y-4 px-4">
-          <div className="text-4xl font-semibold">Pothole Detection System</div>
-          <div className="text-gray-400">Efficiently Identify Road Hazards. Enhancing Road Safety with AI</div>
+          <div className="text-4xl font-semibold">Pothole Patrol</div>
+          <div className="text-gray-400">Know before you go.</div>
           <div>
             <button className="text-white bg-black rounded-lg">
-              <Link to="/Signup">
+              <Link to="/AboutUs">
                 <div className="font-thin mx-6 my-3">Learn More About Us</div>
               </Link>
             </button>
           </div>
         </div>
         <div className=" flex flex-col md:flex-row justify-between items-center mx-4 md:mx-20 gap-10">
+          <div className="max-w-full md:max-w-[500px]">
+            <img alt="landing page" src={HomeImg} />
+          </div>
           <div className="flex flex-col gap-y-4 text-center md:text-left">
             <div className="text-2xl font-semibold">Real-Time Pothole Reporting</div>
-            <div className="text-gray-400 max-w-md">Instant Notifications for Road Maintenance. Seamless Integration with Municipal Systems</div>
+            <div className="text-gray-400 max-w-md">Pothole Patrol is a community-driven application that helps you avoid potholes and improve road conditions. Report potholes, get alerts, and contribute to a smoother ride for everyone.</div>
             <div>
               <button className="text-white bg-black rounded-lg">
                 <Link to="/Signup">
@@ -135,9 +138,7 @@ const Home = () => {
               </button>
             </div>
           </div>
-          <div className="max-w-xs md:max-w-md">
-            <img className="object-cover aspect-square rounded-3xl" alt="landing page" src={HomeImg} />
-          </div>
+          
         </div>
       </div>
     </div>
