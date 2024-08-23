@@ -84,7 +84,7 @@ const Home = () => {
 
   return (
     <div className="font-serif">
-      <div className="hidden  flex flex-col items-center justify-center font-semibold">
+      <div className="  flex flex-col items-center justify-center font-semibold">
         <div className={`text-white bg-red-600 rounded-xl text-lg px-6 py-3 mb-4 ${pothole ? '' : 'hidden'}`}>
           <div className="mx-auto">⚠ Alert! ⚠</div>
           <div>Pothole Detected in 100m</div>
@@ -111,13 +111,13 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <div className=" flex flex-col gap-y-10">
+      <div className="hidden flex flex-col gap-y-10">
         <div className="mx-auto flex flex-col items-center text-center gap-y-4 px-4">
           <div className="text-4xl font-semibold">Pothole Patrol</div>
           <div className="text-gray-400">Know before you go.</div>
           <div>
             <button className="text-white bg-black rounded-lg">
-              <Link to="/AboutUs">
+              <Link to="/about">
                 <div className="font-thin mx-6 my-3">Learn More About Us</div>
               </Link>
             </button>

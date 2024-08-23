@@ -10,8 +10,8 @@ export const Navbar = () => {
     };
 
     return (
-        <div className="font-serif">
-            <div className="h-20 md:h-40 font-semibold flex justify-between items-center p-4 md:p-8">
+        <div className="font-serif top-0">
+            <div className="h-20 md:h-30  font-semibold flex justify-between items-center px-4 md:px-8">
                 <div className="cursor-pointer">
                     Pothole Detection
                 </div>
