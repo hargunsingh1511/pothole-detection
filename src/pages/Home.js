@@ -30,13 +30,29 @@ const Home = () => {
     return () => clearInterval(locationInterval);
   }, [isRecording]);
 
-  const handleStartRecording = async () => {
+    const handleStartRecording = async () => {
     try {
+
+      const devices = await navigator.mediaDevices.enumerateDevices();
+    const videoDevices = devices.filter(device => device.kind === "videoinput");
+
+    let rearCameraId = videoDevices.find((device) =>
+      device.label.toLowerCase().includes("back") || device.label.toLowerCase().includes("rear")
+    )?.deviceId;
+
+    const constraints = {
+      video: rearCameraId
+        ? { deviceId: { exact: rearCameraId } } // Use rear camera if found
+        : { facingMode: "environment" },       // Fallback to facingMode
+      audio: false,
+    };
+
+    const stream = await navigator.mediaDevices.getUserMedia(constraints);
       // Request camera stream
-      const stream = await navigator.mediaDevices.getUserMedia({
-        video: true,
-        audio: false,
-      });
+      // const stream = await navigator.mediaDevices.getUserMedia({
+      //   video: true,
+      //   audio: false,
+      // });
   
       // Store the stream for later use
       streamRef.current = stream;
